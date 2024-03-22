@@ -36,8 +36,8 @@ export const CreateOutline = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="outline">Outline: </Label>
-            <Textarea id="outline" name="outline" required rows={10} cols={5} />
+            <Label htmlFor="content">Outline: </Label>
+            <Textarea id="content" name="content" required rows={10} cols={5} />
           </div>
 
           <SubmitButton className="ml-auto">Create</SubmitButton>
