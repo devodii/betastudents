@@ -7,7 +7,9 @@
     "./wrapper": "./src/wrapper.tsx",
     "./skeleton": "./src/skeleton.tsx",
     "./input": "./src/input.tsx",
+    "./textarea": "./src/textarea.tsx",
     "./label": "./src/label.tsx",
+    "./dialog": "./src/dialog.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
     "./util": "./src/lib/utils.ts"
@@ -29,6 +31,8 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@radix-ui/react-label": "^2.0.2"
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-label": "^2.0.2",
+    "lucide-react": "^0.363.0"
   }
 }

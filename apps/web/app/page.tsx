@@ -1,7 +1,12 @@
 import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
+import { getUser } from "../actions/user";
 
-export default function Page() {
+export default async function Page() {
+  const user = await getUser();
+
+  const hasSession = user?.data?.user?.id;
+
   return (
     <div className="my-8 px-12 md:px-24 mx-auto max-w-7xl flex flex-col gap-6">
       <header className="w-full flex items-center justify-between">
@@ -9,16 +14,35 @@ export default function Page() {
 
         <nav>
           <ul className="flex gap-2">
-            <li>
-              <Link href={"/sign-in"} className="underline underline-offset-2">
-                sign in
-              </Link>
-            </li>
-            <li>
-              <Link href={"/sign-up"} className="underline underline-offset-2">
-                sign up
-              </Link>
-            </li>
+            {hasSession ? (
+              <li>
+                <Link
+                  href={"/dashboard"}
+                  className="underline underline-offset-2"
+                >
+                  dashboard
+                </Link>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    href={"/sign-in"}
+                    className="underline underline-offset-2"
+                  >
+                    sign in
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={"/sign-up"}
+                    className="underline underline-offset-2"
+                  >
+                    sign up
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </header>
