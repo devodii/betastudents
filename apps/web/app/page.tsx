@@ -44,7 +44,10 @@ export default function Page() {
       </div>
       <footer className="flex flex-col gap-2 items-center justify-center mx-auto fixed bottom-4 w-full max-w-5xl">
         <p className="text-xl font-medium">Products</p>
-        <Link href={"/outline-gen"} className="underline underline-offset-2">
+        <Link
+          href={"/apps/outline-gen"}
+          className="underline underline-offset-2"
+        >
           Course outline generator
         </Link>
       </footer>

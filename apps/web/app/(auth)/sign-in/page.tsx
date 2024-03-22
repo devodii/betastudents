@@ -3,13 +3,9 @@ import { Label } from "@repo/ui/label";
 import { Wrapper } from "@repo/ui/wrapper";
 import Link from "next/link";
 import { SubmitButton } from "../../../components/submit-button";
+import { signIn } from "../../../actions/user";
 
 export default function SignInPage() {
-  async function signIn(formdata: FormData) {
-    "use server";
-    console.log({ formdata });
-  }
-
   return (
     <Wrapper>
       <h2 className="font-semibold text-2xl md:text-3xl">Sign in</h2>

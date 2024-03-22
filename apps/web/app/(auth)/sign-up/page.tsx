@@ -2,19 +2,15 @@ import { Input } from "@repo/ui/input";
 import { Label } from "@repo/ui/label";
 import { Wrapper } from "@repo/ui/wrapper";
 import Link from "next/link";
+import { signUp } from "../../../actions/user";
 import { SubmitButton } from "../../../components/submit-button";
 
 export default function SignInPage() {
-  async function signIn(formdata: FormData) {
-    "use server";
-    console.log({ formdata });
-  }
-
   return (
     <Wrapper>
-      <h2 className="font-semibold text-2xl md:text-3xl">Sign in</h2>
+      <h2 className="font-semibold text-2xl md:text-3xl">Sign up</h2>
       <form
-        action={signIn}
+        action={signUp}
         className="w-full max-w-4xl mx-auto flex flex-col gap-6"
       >
         <div className="space-y-2">
