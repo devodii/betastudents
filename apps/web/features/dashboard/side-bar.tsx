@@ -2,8 +2,16 @@ import Link from "next/link";
 
 export const DashboardSideBar = () => {
   return (
-    <nav className="flex flex-col gap-4 w-52">
-      <ul>
+    <nav className="w-52">
+      <ul className="grid grid-cols-1 gap-4">
+        <li>
+          <Link
+            href={"/dashboard"}
+            className="active:underline active:underline-offset-2"
+          >
+            Home
+          </Link>
+        </li>
         <li>
           <Link
             href={"/dashboard/courses"}

@@ -1,16 +1,14 @@
-import { Wrapper } from "@repo/ui/wrapper";
-import { getUser } from "../../actions/user";
 import { CreateOutline } from "../../components/create-outline";
-import { DashboardHeader } from "../../features/dashboard/header";
 
 export default async function DashboardPage() {
-  const user = await getUser();
-
   return (
-    <Wrapper className="flex-col items-start justify-start my-12">
-      <div>Logged in as: {user?.data?.user?.email}</div>
+    <div className="h-full w-full flex flex-col gap-4 items-center justify-center">
+      <p className="text-xl "> It&apos;s a bit empty here</p>
+      <p className="text-xl">
+        Get started by creating a course outline for your self
+      </p>
 
-      <CreateOutline />
-    </Wrapper>
+      <CreateOutline>Create a course outline</CreateOutline>
+    </div>
   );
 }
