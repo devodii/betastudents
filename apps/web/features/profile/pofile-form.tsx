@@ -14,6 +14,7 @@ import * as React from "react";
 import { createProfile } from "../../actions/profile";
 import { SubmitButton } from "../../components/submit-button";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { EducationLevelComboBox } from "./education-level-combo";
 
 interface Props {
   open?: boolean;
@@ -32,6 +33,8 @@ export const ProfileForm = ({ children: trigger, open }: Props) => {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  const nickName = searchParams.get("handle");
+
   return (
     <Dialog defaultOpen={open} onOpenChange={handleClearSearchParams}>
       {trigger && (
@@ -48,17 +51,29 @@ export const ProfileForm = ({ children: trigger, open }: Props) => {
 
         <form action={createProfile} className="grid grid-cols-1 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="country">Country: </Label>
+            <Label htmlFor="username">Nick name </Label>
+            <Input
+              id="username"
+              name="username"
+              defaultValue={nickName!}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="country">Country </Label>
             <Input id="country" name="country" required />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="education_level">Education level: </Label>
-            <Input id="education_level" name="education_level" required />
+          <div className="space-y-2 flex flex-col">
+            <Label htmlFor="education_level">Education level </Label>
+            {/* <Input id="education_level" name="education_level" required /> */}
+
+            <EducationLevelComboBox />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="school_name">School name: </Label>
+            <Label htmlFor="school_name">School name </Label>
             <Input id="school_name" name="school_name" />
           </div>
 

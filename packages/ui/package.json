@@ -12,6 +12,8 @@
     "./dialog": "./src/dialog.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
+    "./popover": "./src/popover.tsx",
+    "./command": "./src/command.tsx",
     "./util": "./src/lib/utils.ts"
   },
   "scripts": {
@@ -33,6 +35,8 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-popover": "^1.0.7",
+    "cmdk": "^0.2.1",
     "lucide-react": "^0.363.0"
   }
 }
