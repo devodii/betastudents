@@ -34,7 +34,7 @@ export default function SignInPage() {
           className="underline underline-offset-2 ml-1 cursor-pointer"
           href={"/sign-in"}
         >
-          sign in
+          sign up
         </Link>
       </div>
     </Wrapper>

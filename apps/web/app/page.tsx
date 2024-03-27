@@ -1,6 +1,6 @@
-import { Skeleton } from "@repo/ui/skeleton";
 import Link from "next/link";
 import { getUser } from "../actions/user";
+import { ProfileForm } from "../components/profile-form";
 
 export default async function Page() {
   const user = await getUser();
@@ -47,25 +47,24 @@ export default async function Page() {
         </nav>
       </header>
 
-      <p className="text-xl text-center mt-12">
-        Beta Students is a platform where students help each other learn
-        effectively from all around the world. ❤️
-      </p>
+      <div className="space-y-2 my-4 md:my-6 max-w-xl mx-auto">
+        <div className="text-[3.125rem] font-semibold text-center">
+          Easy Studying Ahead.
+        </div>
 
-      <div className="space-y-1">
-        <h4 className="text-3xl font-semibold">Course Outlines</h4>
-        <p className="text-gray-900">
-          Browse course outlines posted by other students
-        </p>
-
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
-          {Array.from({ length: 3 }, (_item, idx) => (
-            <li key={idx}>
-              <Skeleton className="w-full h-48 rounded-md bg-gray-300" />
-            </li>
-          ))}
-        </ul>
+        <div className="text-gray-800 text-center">
+          BetaStudents is your education platform for learning effectively by
+          creating course schedules, connect with students around the world -
+          and so much more
+        </div>
       </div>
+
+      <div className="flex flex-col gap-2 justify-center items-center w-full max-w-2xl mx-auto">
+        <span className="text-[14.5px] text-gray-700">create my page</span>
+
+        <ProfileForm />
+      </div>
+
       <footer className="flex flex-col gap-2 items-center justify-center mx-auto fixed bottom-4 w-full max-w-5xl">
         <p className="text-xl font-medium">Products</p>
         <Link
