@@ -61,24 +61,24 @@ export const ProfileForm = ({ children: trigger, open }: Props) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="country">Country </Label>
+            <Label htmlFor="country">🌎 Country </Label>
             <Input id="country" name="country" required />
           </div>
 
           <div className="space-y-2 flex flex-col">
-            <Label htmlFor="education_level">Education level </Label>
+            <Label htmlFor="education_level">📚 Education level </Label>
             {/* <Input id="education_level" name="education_level" required /> */}
 
             <EducationLevelComboBox />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="school_name">School name </Label>
+            <Label htmlFor="school_name">🏫 School name </Label>
             <Input id="school_name" name="school_name" />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="graduation_year">Graduation year </Label>
+            <Label htmlFor="graduation_year">🎓 Graduation year </Label>
             <Input id="graduation_year" name="graduation_year" />
           </div>
 
