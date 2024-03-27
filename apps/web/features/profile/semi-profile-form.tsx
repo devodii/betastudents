@@ -1,8 +1,8 @@
 import { Input } from "@repo/ui/input";
-import { SubmitButton } from "./submit-button";
-import { mockCreateProfile } from "../actions/profile";
+import { SubmitButton } from "../../components/submit-button";
+import { mockCreateProfile } from "../../actions/profile";
 
-export const ProfileForm = () => {
+export const SemiProfileForm = () => {
   return (
     <form
       className="w-full flex-col sm:flex-row flex items-center  gap-2 justify-center"

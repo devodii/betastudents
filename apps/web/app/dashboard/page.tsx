@@ -1,6 +1,14 @@
 import { CreateOutline } from "../../components/create-outline";
+import { ProfileForm } from "../../features/profile/pofile-form";
 
-export default async function DashboardPage() {
+interface Props {
+  searchParams: {
+    createProfile?: string;
+    handle?: string;
+  };
+}
+
+export default async function DashboardPage({ searchParams }: Props) {
   return (
     <div className="h-full w-full flex flex-col gap-4 items-center justify-center">
       <p className="text-xl "> It&apos;s a bit empty here</p>
@@ -9,6 +17,8 @@ export default async function DashboardPage() {
       </p>
 
       <CreateOutline>Create a course outline</CreateOutline>
+
+      {searchParams?.createProfile && <ProfileForm open />}
     </div>
   );
 }

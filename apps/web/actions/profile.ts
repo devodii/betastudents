@@ -52,5 +52,5 @@ export const mockCreateProfile = async (formdata: FormData) => {
     redirect("/sign-in");
   }
 
-  redirect(`/dashboard?create-profile=true&handle=${handle}`);
+  redirect(`/dashboard?createProfile=true&handle=${handle}`);
 };

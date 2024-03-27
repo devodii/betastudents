@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getUser } from "../actions/user";
-import { ProfileForm } from "../components/profile-form";
+import { SemiProfileForm } from "../features/profile/semi-profile-form";
 
 export default async function Page() {
   const user = await getUser();
@@ -62,7 +62,7 @@ export default async function Page() {
       <div className="flex flex-col gap-2 justify-center items-center w-full max-w-2xl mx-auto">
         <span className="text-[14.5px] text-gray-700">create my page</span>
 
-        <ProfileForm />
+        <SemiProfileForm />
       </div>
 
       <footer className="flex flex-col gap-2 items-center justify-center mx-auto fixed bottom-4 w-full max-w-5xl">

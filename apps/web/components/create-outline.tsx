@@ -25,7 +25,7 @@ export const CreateOutline = ({
   return (
     <>
       <Dialog>
-        <DialogTrigger className="underline underline-offset-2">
+        <DialogTrigger className="underline underline-offset-2" asChild>
           <Button>{trigger}</Button>
         </DialogTrigger>
 
