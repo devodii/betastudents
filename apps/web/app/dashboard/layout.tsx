@@ -7,7 +7,7 @@ export default async function DashboardLayout({
   children,
 }: React.PropsWithChildren) {
   return (
-    <Wrapper className="mt-12 flex flex-col items-start justify-start gap-6 px-6 md:px-12 overflow-x-hidden">
+    <Wrapper className="mt-12  items-start justify-start overflow-x-hidden">
       <DashboardHeader />
 
       <div className="flex gap-12 w-full">
