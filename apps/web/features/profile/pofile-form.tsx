@@ -16,14 +16,23 @@ import { SubmitButton } from "../../components/submit-button";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { EducationLevelComboBox } from "./education-level-combo";
 import { CountriesComboBox } from "./country-combo";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Profile } from "./types";
+import { educationLevels } from "./education-level";
 
-interface Props {
+type SubmitProps = SubmitHandler<Profile>;
+
+interface ProfileFormProps {
   open?: boolean;
   children?: React.ReactNode;
   countries?: any[];
 }
 
-export const ProfileForm = ({ children: trigger, open, countries }: Props) => {
+export const ProfileForm = ({
+  children: trigger,
+  open,
+  countries,
+}: ProfileFormProps) => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -37,6 +46,24 @@ export const ProfileForm = ({ children: trigger, open, countries }: Props) => {
 
   const nickName = searchParams.get("handle");
 
+  const [selectedCountry, setSelectedCountry] = React.useState("");
+  const [educationLevel, setEducationLevel] = React.useState("");
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<Profile>();
+
+  const handleCreate: SubmitProps = (data, e: any) => {
+    e?.preventDefault();
+    createProfile({
+      ...data,
+      country: selectedCountry,
+      education_level: educationLevel,
+    });
+  };
+
   return (
     <Dialog defaultOpen={open} onOpenChange={handleClearSearchParams}>
       {trigger && (
@@ -45,45 +72,70 @@ export const ProfileForm = ({ children: trigger, open, countries }: Props) => {
         </DialogTrigger>
       )}
 
-      <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+      <DialogContent
+        onInteractOutside={(e) => e.preventDefault()}
+        className="max-w-4xl"
+      >
         <DialogHeader>Create a student profile</DialogHeader>
         <DialogDescription>
           Your profile would enable other students connect with you.
         </DialogDescription>
 
-        <form action={createProfile} className="grid grid-cols-1 gap-6">
+        <form
+          onSubmit={handleSubmit(handleCreate)}
+          className="grid grid-cols-1 gap-6"
+        >
           <ProfileFormRow>
-            <Label htmlFor="username">Nick name </Label>
+            <Label htmlFor="handle">Nick name </Label>
             <Input
-              id="username"
-              name="username"
+              id="handle"
               defaultValue={nickName!}
               required
+              {...register("handle", {
+                pattern: {
+                  value: /^@[a-zA-Z0-9_]+$/,
+                  message: "nick name must start with @",
+                },
+              })}
             />
+
+            {errors.handle && (
+              <span className="text-red-500">{errors.handle.message}</span>
+            )}
           </ProfileFormRow>
 
           <ProfileFormRow>
             <Label htmlFor="country">🌎 Country </Label>
-            {/* <Input id="country" name="country" required /> */}
 
-            <CountriesComboBox countries={countries!} />
+            <CountriesComboBox
+              countries={countries!}
+              value={selectedCountry}
+              setValue={setSelectedCountry}
+            />
           </ProfileFormRow>
 
           <ProfileFormRow>
             <Label htmlFor="education_level">📚 Education level </Label>
-            {/* <Input id="education_level" name="education_level" required /> */}
 
-            <EducationLevelComboBox />
+            <EducationLevelComboBox
+              educationLevels={educationLevels}
+              value={educationLevel}
+              setValue={setEducationLevel}
+            />
           </ProfileFormRow>
 
           <ProfileFormRow>
             <Label htmlFor="school_name">🏫 School name </Label>
-            <Input id="school_name" name="school_name" />
+            <Input id="school_name" {...register("school_name")} />
           </ProfileFormRow>
 
           <div className="space-y-2">
             <Label htmlFor="graduation_year">🎓 Graduation year </Label>
-            <Input id="graduation_year" name="graduation_year" />
+            <Input
+              id="graduation_year"
+              placeholder="2024"
+              {...register("graduation_year")}
+            />
           </div>
 
           <SubmitButton className="mx-auto">Create profile</SubmitButton>

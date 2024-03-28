@@ -13,34 +13,19 @@ import {
 } from "@repo/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@repo/ui/popover";
 
-export const educationLevels = [
-  {
-    value: "high-school",
-    label: "High School",
-  },
-  {
-    value: "university-bachelor",
-    label: "University (Bachelor)",
-  },
-  {
-    value: "university-master",
-    label: "University (Master)",
-  },
-  {
-    value: "niversity-phd",
-    label: "University (Phd)",
-  },
-  {
-    value: "not-a-student",
-    label: "Not doing school stuff",
-  },
-];
+interface Props {
+  educationLevels: any[];
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+}
 
-export const EducationLevelComboBox = () => {
+export const EducationLevelComboBox = ({
+  educationLevels,
+  value,
+  setValue,
+}: Props) => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
 
-  console.log(value);
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

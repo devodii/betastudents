@@ -19,10 +19,16 @@ interface Country {
 
 interface Props {
   countries: any[];
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
-export const CountriesComboBox = ({ countries: countriesArray }: Props) => {
+
+export const CountriesComboBox = ({
+  countries: countriesArray,
+  value,
+  setValue,
+}: Props) => {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
 
   const countries: Country[] = countriesArray.reduce((acc, country) => {
     const name = country.name.common;

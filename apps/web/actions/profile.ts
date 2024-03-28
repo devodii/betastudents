@@ -3,8 +3,10 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../lib/server";
 import { getUser } from "./user";
+import { Profile } from "../features/profile/types";
 
-export const createProfile = async (formdata: FormData) => {
+export const createProfile = async (dto: Profile) => {
+  console.log({ dto });
   const user = await getUser();
 
   if (!user?.data?.user?.id) {
@@ -12,8 +14,6 @@ export const createProfile = async (formdata: FormData) => {
   }
 
   const supabase = await createClient();
-
-  const dto = Object.fromEntries(formdata) as Record<string, any>;
 
   const { handle } = dto;
 
@@ -25,7 +25,11 @@ export const createProfile = async (formdata: FormData) => {
 
   const { data, error } = await supabase.from("profile").insert({ ...dto });
 
-  console.log({ error, data });
+  if (error) {
+    redirect("/error?cat=create-profile");
+  }
+
+  redirect(`/${handle}`);
 };
 
 export const getProfile = async (handle: string) => {
