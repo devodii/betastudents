@@ -86,7 +86,7 @@ export const ProfileForm = ({
           className="grid grid-cols-1 gap-6"
         >
           <ProfileFormRow>
-            <Label htmlFor="handle">Nick name </Label>
+            <Label htmlFor="handle">👤 Nick name </Label>
             <Input
               id="handle"
               defaultValue={nickName!}
