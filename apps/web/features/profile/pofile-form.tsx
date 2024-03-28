@@ -15,13 +15,15 @@ import { createProfile } from "../../actions/profile";
 import { SubmitButton } from "../../components/submit-button";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { EducationLevelComboBox } from "./education-level-combo";
+import { CountriesComboBox } from "./country-combo";
 
 interface Props {
   open?: boolean;
   children?: React.ReactNode;
+  countries?: any[];
 }
 
-export const ProfileForm = ({ children: trigger, open }: Props) => {
+export const ProfileForm = ({ children: trigger, open, countries }: Props) => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -49,8 +51,8 @@ export const ProfileForm = ({ children: trigger, open }: Props) => {
           Your profile would enable other students connect with you.
         </DialogDescription>
 
-        <form action={createProfile} className="grid grid-cols-1 gap-4">
-          <div className="space-y-2">
+        <form action={createProfile} className="grid grid-cols-1 gap-6">
+          <ProfileFormRow>
             <Label htmlFor="username">Nick name </Label>
             <Input
               id="username"
@@ -58,24 +60,26 @@ export const ProfileForm = ({ children: trigger, open }: Props) => {
               defaultValue={nickName!}
               required
             />
-          </div>
+          </ProfileFormRow>
 
-          <div className="space-y-2">
+          <ProfileFormRow>
             <Label htmlFor="country">🌎 Country </Label>
-            <Input id="country" name="country" required />
-          </div>
+            {/* <Input id="country" name="country" required /> */}
 
-          <div className="space-y-2 flex flex-col">
+            <CountriesComboBox countries={countries!} />
+          </ProfileFormRow>
+
+          <ProfileFormRow>
             <Label htmlFor="education_level">📚 Education level </Label>
             {/* <Input id="education_level" name="education_level" required /> */}
 
             <EducationLevelComboBox />
-          </div>
+          </ProfileFormRow>
 
-          <div className="space-y-2">
+          <ProfileFormRow>
             <Label htmlFor="school_name">🏫 School name </Label>
             <Input id="school_name" name="school_name" />
-          </div>
+          </ProfileFormRow>
 
           <div className="space-y-2">
             <Label htmlFor="graduation_year">🎓 Graduation year </Label>
@@ -88,3 +92,9 @@ export const ProfileForm = ({ children: trigger, open }: Props) => {
     </Dialog>
   );
 };
+
+const ProfileFormRow = ({ children }: React.PropsWithChildren) => (
+  <div className="flex flex-col gap-2">{children}</div>
+);
+
+ProfileFormRow.displayName = "ProfileFormRow";
