@@ -24,7 +24,7 @@ export default function SignInPage() {
         </div>
 
         <div className="flex items-center justify-end">
-          <SubmitButton>Sign in</SubmitButton>
+          <SubmitButton>Sign up</SubmitButton>
         </div>
       </form>
 
@@ -34,7 +34,7 @@ export default function SignInPage() {
           className="underline underline-offset-2 ml-1 cursor-pointer"
           href={"/sign-in"}
         >
-          sign up
+          sign in
         </Link>
       </div>
     </Wrapper>

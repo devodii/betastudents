@@ -10,15 +10,18 @@ import {
 } from "@repo/ui/dialog";
 import { Input } from "@repo/ui/input";
 import { Label } from "@repo/ui/label";
-import * as React from "react";
-import { createProfile } from "../../actions/profile";
-import { SubmitButton } from "../../components/submit-button";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { EducationLevelComboBox } from "./education-level-combo";
-import { CountriesComboBox } from "./country-combo";
+import * as React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Profile } from "./types";
+import { createProfile } from "../../actions/profile";
+import { uploadImage } from "../../actions/storage";
+import { SubmitButton } from "../../components/submit-button";
+import useFilePreview from "../../hooks/use-preview-image";
+import { imageUrlToFile } from "../../lib/image-transformer";
+import { CountriesComboBox } from "./country-combo";
 import { educationLevels } from "./education-level";
+import { EducationLevelComboBox } from "./education-level-combo";
+import { Profile } from "./types";
 
 type SubmitProps = SubmitHandler<Profile>;
 
@@ -53,12 +56,26 @@ export const ProfileForm = ({
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = useForm<Profile>();
 
-  const handleCreate: SubmitProps = (data, e: any) => {
+  const image = watch("photo_url");
+  const handle = watch("handle");
+
+  const [filePreview] = useFilePreview(image);
+
+  const handleCreate: SubmitProps = async (data, e: any) => {
     e?.preventDefault();
+
+    const file = await imageUrlToFile(filePreview as string, handle);
+
+    const url = await uploadImage(file, handle);
+
+    console.log({ file });
+
     createProfile({
       ...data,
+      photo_url: url,
       country: selectedCountry,
       education_level: educationLevel,
     });
@@ -85,6 +102,32 @@ export const ProfileForm = ({
           onSubmit={handleSubmit(handleCreate)}
           className="grid grid-cols-1 gap-6"
         >
+          <ProfileFormRow>
+            {filePreview ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={filePreview as string}
+                alt={nickName as string}
+                className="rounded-base h-[150px] w-[200px] mx-auto rounded-md object-cover "
+              />
+            ) : (
+              <>
+                <Label
+                  htmlFor="image"
+                  className="bg-gray-300 rounded-md h-[150px] w-full max-w-[200px] mx-auto flex items-center justify-center cursor-pointer"
+                >
+                  Upload a photo
+                </Label>
+                <Input
+                  {...register("photo_url")}
+                  className="hidden"
+                  type="file"
+                  id="image"
+                />
+              </>
+            )}
+          </ProfileFormRow>
+
           <ProfileFormRow>
             <Label htmlFor="handle">👤 Nick name </Label>
             <Input

@@ -25,11 +25,14 @@ export const createProfile = async (dto: Profile) => {
 
   const { data, error } = await supabase.from("profile").insert({ ...dto });
 
-  if (error) {
-    redirect("/error?cat=create-profile");
-  }
+  // if (error) {
+  //   console.log({ error });
+  //   // redirect("/error?cat=create-profile");
+  // }
 
-  redirect(`/${handle}`);
+  console.log({ error, data });
+
+  // redirect(`/${handle}`);
 };
 
 export const getProfile = async (handle: string) => {
