@@ -15,14 +15,24 @@ export default async function Page() {
         <nav>
           <ul className="flex gap-2">
             {hasSession ? (
-              <li>
-                <Link
-                  href={"/dashboard"}
-                  className="underline underline-offset-2"
-                >
-                  dashboard
-                </Link>
-              </li>
+              <>
+                <li>
+                  <Link
+                    href={"/dashboard"}
+                    className="underline underline-offset-2"
+                  >
+                    dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={"/pricing"}
+                    className="underline underline-offset-2"
+                  >
+                    pricing
+                  </Link>
+                </li>
+              </>
             ) : (
               <>
                 <li>
@@ -39,6 +49,15 @@ export default async function Page() {
                     className="underline underline-offset-2"
                   >
                     sign up
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    href={"/pricing"}
+                    className="underline underline-offset-2"
+                  >
+                    pricing
                   </Link>
                 </li>
               </>
