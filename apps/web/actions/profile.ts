@@ -3,9 +3,9 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../lib/server";
 import { getUser } from "./user";
-import { Profile } from "../features/profile/types";
+import { Profile, ProfileCreationProps } from "../features/profile/types";
 
-export const createProfile = async (dto: Profile) => {
+export const createProfile = async (dto: ProfileCreationProps) => {
   console.log({ dto });
   const user = await getUser();
 
@@ -25,14 +25,14 @@ export const createProfile = async (dto: Profile) => {
 
   const { data, error } = await supabase.from("profile").insert({ ...dto });
 
-  // if (error) {
-  //   console.log({ error });
-  //   // redirect("/error?cat=create-profile");
-  // }
+  if (error) {
+    console.log({ error });
+    redirect("/error?cat=create-profile");
+  }
 
   console.log({ error, data });
 
-  // redirect(`/${handle}`);
+  redirect(`/${handle}`);
 };
 
 export const getProfile = async (handle: string) => {

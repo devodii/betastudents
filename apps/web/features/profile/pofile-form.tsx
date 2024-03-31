@@ -21,9 +21,9 @@ import { imageUrlToFile } from "../../lib/image-transformer";
 import { CountriesComboBox } from "./country-combo";
 import { educationLevels } from "./education-level";
 import { EducationLevelComboBox } from "./education-level-combo";
-import { Profile } from "./types";
+import { ProfileCreationProps } from "./types";
 
-type SubmitProps = SubmitHandler<Profile>;
+type SubmitProps = SubmitHandler<ProfileCreationProps>;
 
 interface ProfileFormProps {
   open?: boolean;
@@ -57,7 +57,7 @@ export const ProfileForm = ({
     register,
     formState: { errors },
     watch,
-  } = useForm<Profile>();
+  } = useForm<ProfileCreationProps>();
 
   const image = watch("photo_url");
   const handle = watch("handle");
@@ -70,8 +70,6 @@ export const ProfileForm = ({
     const file = await imageUrlToFile(filePreview as string, handle);
 
     const url = await uploadImage(file, handle);
-
-    console.log({ file });
 
     createProfile({
       ...data,
@@ -123,6 +121,7 @@ export const ProfileForm = ({
                   className="hidden"
                   type="file"
                   id="image"
+                  accept=".jpg"
                 />
               </>
             )}

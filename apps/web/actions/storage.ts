@@ -1,12 +1,11 @@
-"use server";
+"use client";
 
-import { createClient } from "../lib/server";
+import { supabaseClient } from "../lib/client";
 
 export const uploadImage = async (image: any, handle: string) => {
   console.log({ image, handle });
-  const supabase = await createClient();
 
-  const { data: upload, error: uploadError } = await supabase.storage
+  const { data: upload, error: uploadError } = await supabaseClient.storage
     .from("profile")
     .upload(`${handle}.webp`, image, {
       upsert: true,
@@ -15,9 +14,9 @@ export const uploadImage = async (image: any, handle: string) => {
 
   console.log({ upload, uploadError });
 
-  const { data } = await supabase.storage
+  const { data } = await supabaseClient.storage
     .from("profile")
-    .getPublicUrl("image.png");
+    .getPublicUrl(`${handle}.webp`);
 
   return data.publicUrl;
 };
