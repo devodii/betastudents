@@ -1,50 +1,40 @@
-import { NextResponse } from "next/server";
 import crypto from "crypto";
-import { supabaseClient } from "../../../lib/client";
+import { getUser } from "../../../actions/user";
 
-async function processEvent(event: any) {
-  const data = event.data.attributes;
-  if (
-    data.status === "paid" &&
-    event.meta.event_name.startsWith("order_created")
-  ) {
-    console.log({ data });
-    const { error, data: update } = await supabaseClient.auth.updateUser({
-      data: { isSubscribed: true },
-    });
+export async function POST(req: any) {
+  try {
+    const clonedReq = req.clone();
+    const eventType = req.headers.get("X-Event-Name");
+    const body = await req.json();
 
-    console.log({ update });
+    // Check signature
+    const secret = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_SECRET!;
+    const hmac = crypto.createHmac("sha256", secret);
+    const digest = Buffer.from(
+      hmac.update(await clonedReq.text()).digest("hex"),
+      "utf8"
+    );
+    const signature = Buffer.from(req.headers.get("X-Signature") || "", "utf8");
 
-    if (error) {
-      console.log("An error occured while updating user", error);
+    if (!crypto.timingSafeEqual(digest, signature)) {
+      throw new Error("Invalid signature.");
     }
-  } else {
-    console.log(data);
-    return "Something went wrong!";
+
+    // Logic according to event
+    if (eventType === "order_created") {
+      const userId = body.meta.custom_data?.userId;
+      const isSuccessful = body.data.attributes.status === "paid";
+
+      console.log({ userId, isSuccessful });
+
+      const user = await getUser();
+
+      console.log({ user });
+    }
+
+    return Response.json({ message: "Webhook received" });
+  } catch (err) {
+    console.error(err);
+    return Response.json({ message: "Server error" }, { status: 500 });
   }
 }
-
-async function webhook(request: any) {
-  console.log("request came in.");
-  const rawBody = await request.text();
-
-  const secret = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_SECRET!;
-  const hmac = crypto.createHmac("sha256", secret);
-  const digest = Buffer.from(hmac.update(rawBody).digest("hex"), "utf8");
-  const signature = Buffer.from(
-    request.headers.get("X-Signature") || "",
-    "utf8"
-  );
-
-  if (!crypto.timingSafeEqual(digest, signature)) {
-    throw new Error("Invalid signature.");
-  }
-
-  const data = JSON.parse(rawBody);
-
-  await processEvent(data);
-
-  return NextResponse.json({ status: 200 });
-}
-
-export { webhook as POST };

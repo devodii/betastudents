@@ -1,25 +1,20 @@
 "use client";
 
-import { Crown, Lightning } from "@phosphor-icons/react";
+import { Crown, Lightning, Spinner } from "@phosphor-icons/react";
 import { Button } from "@repo/ui/button";
-import { Skeleton } from "@repo/ui/skeleton";
 import { Wrapper } from "@repo/ui/wrapper";
-import Link from "next/link";
 import * as React from "react";
-import { lemonSqueezy } from "../../lib/lemon-squeezy";
+import { createCheckoutUrl } from "../../actions/payments";
 
 export const PricingComp = () => {
-  const [url, setUrl] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    const generateCheckoutUrl = async () => {
-      const products = await lemonSqueezy.getProducts();
-      // @ts-ignore
-      setUrl(products?.data[0].attributes.buy_now_url);
-      console.log({ products });
-    };
-    generateCheckoutUrl();
-  }, []);
+  const handleGenerateUrl = async () => {
+    setIsLoading(true);
+    const url = await createCheckoutUrl();
+    setIsLoading(false);
+    window.open(url, "_blank");
+  };
 
   return (
     <Wrapper className="w-full flex-col">
@@ -39,22 +34,21 @@ export const PricingComp = () => {
           <li className="text-xl text-center">get lifetime access</li>
         </ul>
 
-        {!url ? (
-          <Skeleton className="h-12 w-full bg-gray-400" />
-        ) : (
-          <>
-            <Link href={url} target="_blank">
-              <Button className="h-12 w-full flex items-center gap-4 bg-black text-white">
-                <Lightning size={24} />
-                <span className="md:text-xl">Get BetaStudents</span>
-              </Button>
-            </Link>
+        <div>
+          <Button
+            className="h-12 w-full flex items-center gap-4 bg-black text-white"
+            onClick={handleGenerateUrl}
+          >
+            <Lightning size={24} />
+            <span className="md:text-xl">Get BetaStudents</span>
 
-            <p className="text-gray-600 text-center w-full mt-1">
-              Pay once, use it forever
-            </p>
-          </>
-        )}
+            {isLoading && <Spinner className="animate-spin" size={24} />}
+          </Button>
+
+          <p className="text-gray-600 text-center w-full mt-1">
+            Pay once, use it forever
+          </p>
+        </div>
       </div>
     </Wrapper>
   );

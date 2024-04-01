@@ -1,5 +1,13 @@
-import LemonSqueezy from "@lemonsqueezy/lemonsqueezy.js";
+import axios from "axios";
 
-export const lemonSqueezy = new LemonSqueezy(
-  process.env.NEXT_PUBLIC_LEMON_SQUEEZY_API!
-);
+const LEMON_SQUEEZY_ENDPOINT = "https://api.lemonsqueezy.com/v1";
+
+export const LemonSqueezyApi = axios.create({
+  baseURL: LEMON_SQUEEZY_ENDPOINT,
+  headers: {
+    Accept: "application/vnd.api+json",
+    "Content-Type": "application/vnd.api+json",
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_LEMON_SQUEEZY_API}`,
+  },
+  withCredentials: true,
+});
