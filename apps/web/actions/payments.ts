@@ -38,7 +38,9 @@ export const createCheckoutUrl = async () => {
 
     console.log({ checkoutUrl });
     return checkoutUrl;
-  } catch (error) {
-    console.log("An error occured while generating checkout URL", error);
+  } catch (error: any) {
+    console.log("An error occured while generating checkout URL", {
+      error: error?.errors,
+    });
   }
 };
