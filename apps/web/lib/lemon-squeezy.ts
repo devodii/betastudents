@@ -10,4 +10,5 @@ export const LemonSqueezyApi = axios.create({
     Authorization: `Bearer ${process.env.NEXT_PUBLIC_LEMON_SQUEEZY_API}`,
   },
   withCredentials: true,
+  timeout: 1000000,
 });

@@ -12,8 +12,13 @@ export const PricingComp = () => {
   const handleGenerateUrl = async () => {
     setIsLoading(true);
     const url = await createCheckoutUrl();
+
+    console.log({ url });
     setIsLoading(false);
-    window.open(url, "_blank");
+
+    if (url) {
+      window.open(url, "_blank");
+    }
   };
 
   return (
