@@ -23,6 +23,8 @@ import { educationLevels } from "./education-level";
 import { EducationLevelComboBox } from "./education-level-combo";
 import { ProfileCreationProps } from "./types";
 
+import { FormRow } from "../../components/form-row";
+
 type SubmitProps = SubmitHandler<ProfileCreationProps>;
 
 interface ProfileFormProps {
@@ -100,7 +102,7 @@ export const ProfileForm = ({
           onSubmit={handleSubmit(handleCreate)}
           className="grid grid-cols-1 gap-6"
         >
-          <ProfileFormRow>
+          <FormRow>
             {filePreview ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -125,9 +127,9 @@ export const ProfileForm = ({
                 />
               </>
             )}
-          </ProfileFormRow>
+          </FormRow>
 
-          <ProfileFormRow>
+          <FormRow>
             <Label htmlFor="handle">👤 Nick name </Label>
             <Input
               id="handle"
@@ -144,9 +146,9 @@ export const ProfileForm = ({
             {errors.handle && (
               <span className="text-red-500">{errors.handle.message}</span>
             )}
-          </ProfileFormRow>
+          </FormRow>
 
-          <ProfileFormRow>
+          <FormRow>
             <Label htmlFor="country">🌎 Country </Label>
 
             <CountriesComboBox
@@ -154,9 +156,9 @@ export const ProfileForm = ({
               value={selectedCountry}
               setValue={setSelectedCountry}
             />
-          </ProfileFormRow>
+          </FormRow>
 
-          <ProfileFormRow>
+          <FormRow>
             <Label htmlFor="education_level">📚 Education level </Label>
 
             <EducationLevelComboBox
@@ -164,12 +166,12 @@ export const ProfileForm = ({
               value={educationLevel}
               setValue={setEducationLevel}
             />
-          </ProfileFormRow>
+          </FormRow>
 
-          <ProfileFormRow>
+          <FormRow>
             <Label htmlFor="school_name">🏫 School name </Label>
             <Input id="school_name" {...register("school_name")} />
-          </ProfileFormRow>
+          </FormRow>
 
           <div className="space-y-2">
             <Label htmlFor="graduation_year">🎓 Graduation year </Label>
@@ -186,9 +188,3 @@ export const ProfileForm = ({
     </Dialog>
   );
 };
-
-const ProfileFormRow = ({ children }: React.PropsWithChildren) => (
-  <div className="flex flex-col gap-2">{children}</div>
-);
-
-ProfileFormRow.displayName = "ProfileFormRow";
